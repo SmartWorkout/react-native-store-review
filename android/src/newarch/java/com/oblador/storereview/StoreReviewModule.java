@@ -1,7 +1,7 @@
 package com.oblador.storereview;
 
 import androidx.annotation.NonNull;
-import com.facebook.react.bridge.NativeModule;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -22,7 +22,7 @@ public class StoreReviewModule extends NativeRNStoreReviewSpec {
     }
 
     @Override
-    public void requestReview() {
-        StoreReviewModuleImpl.requestReview(getReactApplicationContext());
+    public void requestReview(Promise promise) {
+        StoreReviewModuleImpl.requestReview(getReactApplicationContext(), promise);
     }
 }

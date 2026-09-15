@@ -1,4 +1,23 @@
-# react-native-store-review
+# react-native-store-review (SmartWorkout fork)
+
+Based on upstream `v0.5.0` (`0f41e44`). This fork has no Expo dependency.
+It preserves the package name and native module name for React Native autolinking.
+
+## Fork behavior
+
+`requestReview(): Promise<void>` rejects native failures on both platforms.
+Android resolves when the Google Play launch task completes. iOS resolves after
+submitting the request to StoreKit, which offers no completion callback.
+Neither result confirms that the dialog appeared or a review was submitted.
+
+Android errors include `E_NO_ACTIVITY`, `E_REVIEW_REQUEST_<Google error code>`,
+`E_REVIEW_REQUEST`, and `E_REVIEW_LAUNCH`. iOS rejects with `E_NO_SCENE` when no
+foreground window scene is available. Calls are dispatched to the main thread.
+Web rejects without loading the native module. There are no automatic retries
+or store redirects.
+
+Install this fork from GitHub and pin the full commit SHA in the consuming app.
+See [FORK.md](FORK.md) for maintenance and verification.
 
 This module exposes the native APIs to ask the user to rate the app in the iOS App Store or Google Play store directly from within the app (requires iOS >= 14.0 or Android 5.0 with Google Play store installed). 
 
@@ -8,7 +27,7 @@ This module exposes the native APIs to ask the user to rate the app in the iOS A
 
 ```bash
 # Add dependency
-yarn add react-native-store-review
+yarn add react-native-store-review@https://github.com/SmartWorkout/react-native-store-review.git#<full-commit-sha>
 # Link iOS dependency
 pod install --project-directory=ios
 # Compile project
@@ -22,7 +41,12 @@ The intention of this API is to ask the user to rate the app as a part of the us
 ```js
 import * as StoreReview from 'react-native-store-review';
 
-StoreReview.requestReview();
+try {
+  await StoreReview.requestReview();
+} catch (error) {
+  // Report native failure; do not record a completed request.
+  console.warn(error);
+}
 ```
 
 ### Button

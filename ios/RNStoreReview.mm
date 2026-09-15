@@ -11,9 +11,17 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(requestReview)
+RCT_EXPORT_METHOD(requestReview:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
 {
-  [StoreReview requestReview];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if ([StoreReview requestReview]) {
+      // StoreKit has no completion callback or dialog visibility result.
+      resolve(nil);
+    } else {
+      reject(@"E_NO_SCENE", @"No foreground scene to request a review.", nil);
+    }
+  });
 }
 
 #ifdef RCT_NEW_ARCH_ENABLED
