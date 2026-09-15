@@ -21,3 +21,8 @@ export async function requestReview(): Promise<void> {
 export async function isAvailableAsync(): Promise<boolean> {
   return RNStoreReview?.isAvailableAsync?.() ?? false;
 }
+
+/** Whether this module can start an in-app review flow (no configured store URL fallback). */
+export async function hasAction(): Promise<boolean> {
+  return isAvailableAsync();
+}

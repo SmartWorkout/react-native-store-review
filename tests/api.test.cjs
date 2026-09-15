@@ -59,3 +59,13 @@ test('web is unavailable and rejects review without importing a native module', 
   assert.equal(await api.isAvailableAsync(), false);
   await assert.rejects(api.requestReview(), /not supported on web/);
 });
+
+// SmartWorkout calls both methods; preserve the import-only migration contract.
+test('hasAction matches availability without Expo store URL configuration', async () => {
+  for (const available of [true, false]) {
+    const api = await loadApi({ isAvailableAsync: async () => available });
+    assert.equal(await api.hasAction(), available);
+  }
+  assert.equal(await (await loadApi(null)).hasAction(), false);
+  assert.equal(await (await loadApi(null, true)).hasAction(), false);
+});

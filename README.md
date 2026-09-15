@@ -43,8 +43,10 @@ if (await StoreReview.isAvailableAsync()) {
 - Web or missing native module: returns false.
 
 Availability does not guarantee that the system will show a review dialog.
-This ports the native availability API; `storeUrl()` and `hasAction()` tied to
-Expo app configuration are not exposed. Store links remain the app's responsibility.
+`hasAction()` is also available and returns the same result as
+`isAvailableAsync()`. This matches Expo when no store URLs are configured, as in
+SmartWorkout. The fork does not read Expo app configuration; store links remain
+the app's responsibility.
 
 ## Installation
 
