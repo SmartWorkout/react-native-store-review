@@ -1,4 +1,4 @@
-# react-native-store-review (SmartWorkout fork)
+# react-native-store-review
 
 An Expo-free React Native module with the familiar `expo-store-review` in-app
 review API.
@@ -15,8 +15,8 @@ No Expo runtime or Expo modules are required. See
 
 ## Migrating from expo-store-review
 
-**For an in-app review flow like SmartWorkout's, the only application code change
-is the import.** Existing calls to `hasAction()`, `isAvailableAsync()`, and
+**For the supported in-app review API, the only application code change is the
+import.** Existing calls to `hasAction()`, `isAvailableAsync()`, and
 `requestReview()` can stay as they are:
 
 ```diff
@@ -35,7 +35,7 @@ pod install --project-directory=ios
 
 This import-only migration applies when your app uses those three methods for
 native in-app reviews and does not rely on Expo's configured store URLs or its
-automatic store redirect. That is the setup used by SmartWorkout.
+automatic store redirect.
 
 ### Compatibility scope
 
@@ -87,8 +87,8 @@ if (await StoreReview.isAvailableAsync()) {
 
 Availability does not guarantee that the system will show a review dialog.
 `hasAction()` is also available and returns the same result as
-`isAvailableAsync()`. This matches Expo when no store URLs are configured, as in
-SmartWorkout. The fork does not read Expo app configuration; store links remain
+`isAvailableAsync()`. This matches Expo when no store URLs are configured.
+The fork does not read Expo app configuration; store links remain
 the app's responsibility.
 
 ## Installation
