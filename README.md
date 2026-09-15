@@ -1,11 +1,54 @@
 # react-native-store-review (SmartWorkout fork)
 
-Based on upstream `v0.5.0` (`0f41e44`). This fork has no Expo dependency.
-It preserves the package name and native module name for React Native autolinking.
+An Expo-free React Native module with the familiar `expo-store-review` in-app
+review API.
 
-Availability detection is adapted from `expo-store-review` 57.0.0. The native
-bridge remains `react-native-store-review`; no Expo runtime is required.
-See [third-party notices](THIRD_PARTY_NOTICES.md).
+- **Native module setup and bridge:** `react-native-store-review` v0.5.0
+  (`0f41e44`), including React Native autolinking and architecture support.
+- **Availability implementation:** adapted from `expo-store-review` 57.0.0,
+  including Google Play detection and the iOS TestFlight check.
+- **Review requests:** the upstream React Native implementation extended with
+  Promise completion, native error reporting, and activity/scene checks.
+
+No Expo runtime or Expo modules are required. See
+[third-party notices](THIRD_PARTY_NOTICES.md) for the adapted Expo code.
+
+## Migrating from expo-store-review
+
+**For an in-app review flow like SmartWorkout's, the only application code change
+is the import.** Existing calls to `hasAction()`, `isAvailableAsync()`, and
+`requestReview()` can stay as they are:
+
+```diff
+-import * as StoreReview from 'expo-store-review';
++import * as StoreReview from 'react-native-store-review';
+```
+
+First replace the dependency with **this GitHub fork** (the npm upstream package
+does not provide this API), install iOS pods, and rebuild the native app:
+
+```bash
+yarn remove expo-store-review
+yarn add 'react-native-store-review@https://github.com/SmartWorkout/react-native-store-review.git#a9d57725d39606d88d7cc13eb001bb8c1636b3f0'
+pod install --project-directory=ios
+```
+
+This import-only migration applies when your app uses those three methods for
+native in-app reviews and does not rely on Expo's configured store URLs or its
+automatic store redirect. That is the setup used by SmartWorkout.
+
+### Compatibility scope
+
+- `isAvailableAsync()` uses the availability checks adapted from Expo.
+- `hasAction()` returns `isAvailableAsync()`. It does not inspect
+  `ios.appStoreUrl` or `android.playStoreUrl` in Expo configuration.
+- `requestReview()` returns `Promise<void>`. Native completion and errors follow
+  the behavior described below; identical error codes and all edge-case behavior
+  across the two libraries are not guaranteed.
+- `storeUrl()` and Expo's automatic URL fallback are not implemented. Apps that
+  use them need to manage store links explicitly.
+- On web, availability is false and a direct `requestReview()` call rejects.
+  Guard the request with the availability check.
 
 ## Fork behavior
 
