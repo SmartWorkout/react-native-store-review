@@ -12,3 +12,12 @@ export async function requestReview(): Promise<void> {
 
   return RNStoreReview.requestReview();
 }
+
+/**
+ * Expo-compatible availability check: Play Store installed on Android,
+ * not TestFlight on iOS. This cannot predict whether a dialog will appear.
+ * Returns false when the native module is unavailable.
+ */
+export async function isAvailableAsync(): Promise<boolean> {
+  return RNStoreReview?.isAvailableAsync?.() ?? false;
+}

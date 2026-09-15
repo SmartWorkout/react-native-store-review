@@ -1,10 +1,10 @@
 {
   "name": "react-native-store-review",
-  "version": "0.5.1-smw.0",
+  "version": "0.5.1-smw.1",
   "description": "Rate on App Store or Google Play directly in your React Native app",
   "main": "src",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules --test tests/*.test.cjs"
   },
   "files": [
     "RNStoreReview.podspec",
@@ -15,7 +15,8 @@
     "!android/build",
     "!android/gradlew*",
     "!android/gradle/wrapper",
-    "!.DS_Store"
+    "!.DS_Store",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "keywords": [
     "react-native",

@@ -11,6 +11,12 @@
 
 RCT_EXPORT_MODULE()
 
+RCT_EXPORT_METHOD(isAvailableAsync:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+{
+  resolve(@([StoreReview isAvailable]));
+}
+
 RCT_EXPORT_METHOD(requestReview:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 {

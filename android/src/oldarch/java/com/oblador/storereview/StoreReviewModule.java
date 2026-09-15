@@ -20,6 +20,11 @@ public class StoreReviewModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void isAvailableAsync(Promise promise) {
+        StoreReviewModuleImpl.isAvailableAsync(getReactApplicationContext(), promise);
+    }
+
+    @ReactMethod
     public void requestReview(Promise promise) {
         StoreReviewModuleImpl.requestReview(getReactApplicationContext(), promise);
     }

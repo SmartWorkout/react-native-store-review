@@ -19,3 +19,7 @@ When updating React Native or merging upstream changes:
 - Pin the validated full commit SHA in the consuming application's dependency.
 
 Do not reintroduce the old patch-package patch in the consuming application.
+
+Availability detection is adapted from expo-store-review 57.0.0; retain
+THIRD_PARTY_NOTICES.md when distributing the package. Public API tests run with
+`npm test` on Node.js 22.13+ (built-in TypeScript stripping and VM modules).

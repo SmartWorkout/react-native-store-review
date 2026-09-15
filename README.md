@@ -3,6 +3,10 @@
 Based on upstream `v0.5.0` (`0f41e44`). This fork has no Expo dependency.
 It preserves the package name and native module name for React Native autolinking.
 
+Availability detection is adapted from `expo-store-review` 57.0.0. The native
+bridge remains `react-native-store-review`; no Expo runtime is required.
+See [third-party notices](THIRD_PARTY_NOTICES.md).
+
 ## Fork behavior
 
 `requestReview(): Promise<void>` rejects native failures on both platforms.
@@ -22,6 +26,25 @@ See [FORK.md](FORK.md) for maintenance and verification.
 This module exposes the native APIs to ask the user to rate the app in the iOS App Store or Google Play store directly from within the app (requires iOS >= 14.0 or Android 5.0 with Google Play store installed). 
 
 <img width="274" alt="Rating Dialog" src="https://cloud.githubusercontent.com/assets/378279/24377493/d22eb0b8-133f-11e7-9968-44d186a3801f.png">
+
+## Availability
+
+```ts
+if (await StoreReview.isAvailableAsync()) {
+  await StoreReview.requestReview();
+}
+```
+
+- Android: checks whether Google Play Store is installed. The manifest includes
+  its package visibility query for Android 11 and later.
+- iOS: returns false for TestFlight, using Expo's sandbox receipt and embedded
+  provisioning profile check. Returns true on the simulator and for development
+  builds that are not detected as TestFlight.
+- Web or missing native module: returns false.
+
+Availability does not guarantee that the system will show a review dialog.
+This ports the native availability API; `storeUrl()` and `hasAction()` tied to
+Expo app configuration are not exposed. Store links remain the app's responsibility.
 
 ## Installation
 

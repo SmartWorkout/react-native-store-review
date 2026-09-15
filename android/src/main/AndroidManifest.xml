@@ -1,4 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.oblador.storereview">
 
+    <queries>
+        <package android:name="com.android.vending" />
+    </queries>
 </manifest>

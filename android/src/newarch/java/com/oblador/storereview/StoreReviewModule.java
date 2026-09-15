@@ -22,6 +22,11 @@ public class StoreReviewModule extends NativeRNStoreReviewSpec {
     }
 
     @Override
+    public void isAvailableAsync(Promise promise) {
+        StoreReviewModuleImpl.isAvailableAsync(getReactApplicationContext(), promise);
+    }
+
+    @Override
     public void requestReview(Promise promise) {
         StoreReviewModuleImpl.requestReview(getReactApplicationContext(), promise);
     }

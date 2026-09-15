@@ -1,6 +1,7 @@
 package com.oblador.storereview;
 
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.UiThreadUtil;
@@ -12,6 +13,18 @@ import com.google.android.gms.tasks.Task;
 
 public class StoreReviewModuleImpl {
     public static final String NAME = "RNStoreReview";
+
+    // Adapted from expo-store-review 57.0.0; see THIRD_PARTY_NOTICES.md.
+    public static void isAvailableAsync(ReactApplicationContext context, Promise promise) {
+        try {
+            context.getPackageManager().getPackageInfo("com.android.vending", 0);
+            promise.resolve(true);
+        } catch (PackageManager.NameNotFoundException error) {
+            promise.resolve(false);
+        } catch (Exception error) {
+            promise.reject("E_REVIEW_AVAILABILITY", "Unable to check Google Play availability.", error);
+        }
+    }
 
     public static void requestReview(ReactApplicationContext context, Promise promise) {
         UiThreadUtil.runOnUiThread(() -> {
