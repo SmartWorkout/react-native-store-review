@@ -22,7 +22,7 @@ the same name does not expose the same API.
 
 ```bash
 yarn remove expo-store-review
-yarn add 'react-native-store-review@https://github.com/SmartWorkout/react-native-store-review.git#a9d57725d39606d88d7cc13eb001bb8c1636b3f0'
+yarn add 'react-native-store-review@https://github.com/SmartWorkout/react-native-store-review.git#d54d30ea1973474f2b02f42afe6a06b304c7a286'
 pod install --project-directory=ios
 ```
 
